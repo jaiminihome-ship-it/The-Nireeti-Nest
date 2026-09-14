@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Nireeti Nest — Tax Invoice</title>
+<!-- High-Resolution Vector PDF Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<style>
+@page { size: A4; margin: 0; }
+:root { --gold:#a66316; --gold2:#d99b38; --brown:#4a2b13; --cream:#fbf7ef; --line:#d9c9ae; --ink:#1a1008; }
+*{ box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body { margin: 0; background: #ddd7ce; color: #1a1008; font-family: Arial, Helvetica, sans-serif; opacity: 1; }
+.toolbar { width: 210mm; margin: 10px auto; display: flex; justify-content: flex-end; gap: 8px; }
+button { border: 0; border-radius: 5px; padding: 8px 14px; background: var(--brown); color: #fff; font-weight: 700; cursor: pointer; }
+button:hover { background: var(--gold); }
+button.hd-btn { background: #a66316; }
+
+/* Standard A4 Setup */
+.invoice { width: 210mm; height: 297mm; margin: 0 auto 20px; background: #fffdfa; overflow: hidden; padding: 6mm 6mm 0; position: relative; display: flex; flex-direction: column; justify-content: space-between; color: #1a1008; }
+
+/* Header Layout */
+.header { height: 50mm; display: grid; grid-template-columns: 28% 44% 28%; border-bottom: 1px solid #d8c4a2; position: relative; align-items: center; }
+.logoBox { display: flex; align-items: center; justify-content: center; padding: 0 2mm; height: 100%; }
+.logo { max-width: 100%; max-height: 44mm; object-fit: contain; }
+
+.company { border-left: 1px solid var(--gold2); padding: 1mm 0 1mm 4mm; display: flex; flex-direction: column; justify-content: center; height: 100%; color: #1a1008; }
+.company h1 { margin: 0 0 1.5mm; color: #633c18; font-size: 21px; font-weight: 800; line-height: 1.1; opacity: 1; }
+.company p { font-size: 11px; margin: 1.2mm 0; line-height: 1.2; color: #1a1008; font-weight: 700; opacity: 1; display: flex; align-items: center; }
+.icon { display: inline-block; width: 16px; color: var(--gold); font-weight: bold; flex-shrink: 0; opacity: 1; }
+.gst { display: inline-block; background: var(--gold); color: #fff; padding: 1px 5px; font: 700 9.5px Arial; border-radius: 2px; margin-right: 5px; opacity: 1; }
+
+.hero { height: 100%; overflow: hidden; border-radius: 0 0 0 28mm; background: #f7efe4; position: relative; display: flex; align-items: center; justify-content: center; border-left: 1px solid var(--gold2); }
+.hero img { width: 100%; height: 100%; object-fit: cover; object-position: right top; opacity: 0.65; }
+
+.invoiceTitle { display: grid; grid-template-columns: 45% 55%; align-items: center; margin: 3mm 0 2mm; }
+.invoiceTitle h2 { font-size: 26px; letter-spacing: 1px; margin: 0; color: #1a1008; font-weight: 800; opacity: 1; }
+.meta { border: 1px solid #ead8bb; border-radius: 5px; background: #fffaf2; display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 2mm 1mm; }
+.meta div { text-align: center; border-right: 1px solid #d7c6ad; font-size: 11px; font-weight: 700; color: #1a1008; opacity: 1; }
+.meta div:last-child { border: 0; }
+.meta b { display: block; font-size: 11px; margin-bottom: 1mm; color: #633c18; opacity: 1; }
+.edit { outline: 0; border-radius: 2px; padding: 1px 3px; color: #1a1008; opacity: 1; }
+.edit:focus { background: #fff3db; }
+
+.parties { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; margin: 2mm 0 3mm; }
+.card { background: #fcf8f0; border: 1px solid #eee1cd; border-radius: 5px; padding: 2.5mm 3.5mm; min-height: 30mm; }
+.card h3 { margin: 0 0 1.5mm; font-size: 14.5px; color: #4d321e; font-weight: 700; opacity: 1; }
+.field { font-size: 11px; margin: 1mm 0; border-bottom: 1px solid #bbb; min-height: 4mm; color: #1a1008; font-weight: 600; opacity: 1; }
+
+/* Fixed Items Table Layout */
+table.items { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 10px; font-weight: 700; border: 1px solid #c8bdae; }
+.items th { background: #80521f; color: #fff; padding: 2.5mm 1mm; border: 1px solid #b9915d; text-align: center; font-size: 10px; opacity: 1; }
+.items td { height: 7.5mm; border: 1px solid #c8bdae; padding: 1mm; text-align: center; color: #000; opacity: 1; }
+.items td:nth-child(2) { text-align: left; }
+.items input { width: 100%; border: 0; background: transparent; outline: 0; font: inherit; text-align: inherit; font-weight: 700; color: #000; opacity: 1; }
+
+.lower { display: grid; grid-template-columns: 55% 45%; gap: 3mm; margin-top: 3mm; }
+.words h3 { font-size: 12px; margin: 0 0 2mm; color: #4d321e; font-weight: 700; opacity: 1; }
+.line { height: 5.5mm; border-bottom: 1px solid #777; font-size: 11px; font-weight: 700; color: #1a1008; opacity: 1; text-transform: capitalize; }
+.totals { width: 100%; border-collapse: collapse; font-size: 10.5px; font-weight: 700; color: #1a1008; }
+.totals td { padding: 1.5mm 2mm; border: 1px solid #c8bdae; opacity: 1; }
+.totals td:last-child { text-align: right; }
+.totals .grand td { background: #70471e; color: #fff; font-weight: bold; font-size: 13.5px; opacity: 1; }
+
+/* Slid Down Bottom Container */
+.bottom-container { display: grid; grid-template-columns: 54% 46%; gap: 3mm; margin-top: 6mm; margin-bottom: 3mm; }
+.left-block { display: flex; flex-direction: column; gap: 3mm; }
+.right-block { display: flex; flex-direction: column; justify-content: space-between; background: #fcf8f0; border: 1px solid #eee1cd; border-radius: 5px; padding: 3.5mm; text-align: center; }
+
+.bank, .terms { background: #fcf8f0; border-radius: 5px; padding: 3mm; border: 1px solid #eee1cd; }
+.bank h3, .terms h3 { margin: 0 0 1.5mm; font-size: 12px; color: #4d321e; font-weight: 700; opacity: 1; }
+.bank p { margin: 1mm 0; font-size: 10.5px; font-weight: 600; color: #1a1008; opacity: 1; }
+.terms ol { margin: 0; padding-left: 14px; font-size: 9.5px; line-height: 1.35; font-weight: 600; color: #1a1008; opacity: 1; }
+
+.thanksText { font-size: 20px; font-style: italic; font-family: Georgia, serif; color: #6a421f; margin-top: 1mm; font-weight: bold; opacity: 1; }
+.thanksSmall { font: 700 8.5px Arial; letter-spacing: 1.2px; margin-top: 1.5mm; color: #4d3927; opacity: 1; }
+
+.signBox { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; margin-top: 6mm; }
+.signLine { width: 80%; border-top: 1px dashed #70471e; margin-bottom: 1.5mm; }
+.signText { font-size: 10.5px; font-weight: 700; color: #4d321e; opacity: 1; }
+
+/* Clean Footer */
+.footer { margin: 2mm -6mm 0; height: 13mm; background: #25180e; color: #e9c889; display: flex; align-items: center; justify-content: space-between; padding: 0 8mm; font: 700 9.5px Arial; letter-spacing: 1px; opacity: 1; }
+.footerLogoWrap { display: flex; align-items: center; justify-content: center; }
+.footerLogo { width: 10mm; height: 10mm; object-fit: contain; border-radius: 50%; background: #fff; padding: 0.8mm; }
+
+/* HIGH-DPI PRINT STYLING FIXES */
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+  body { 
+    background: #fff; 
+  }
+  .toolbar { 
+    display: none; 
+  }
+  .invoice { 
+    margin: 0 auto; 
+    box-shadow: none; 
+    height: 297mm; 
+    max-height: 297mm; 
+    page-break-inside: avoid; 
+    background: #fffdfa !important;
+  }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+  <button class="hd-btn" onclick="downloadHD_PDF()">Download Ultra-HD PDF</button>
+  <button onclick="window.print()">Browser Print</button>
+  <button onclick="resetItems()">Reset Items</button>
+</div>
+
+<main class="invoice" id="invoiceArea">
+<div>
+  <section class="header">
+    <div class="logoBox">
+      <img class="logo" src="https://lh3.googleusercontent.com/d/1dU0EQte2gqvney_3XB1FB-fUZDaAuemj" alt="The Nireeti Nest">
+    </div>
+    <div class="company">
+      <h1>Nireeti Enterprises</h1>
+      <p><span class="icon">⌖</span> Plot No C 109, Ekta Nagar C, Dhawas, Jaipur, Rajasthan - 302026</p>
+      <p><span class="icon">●</span> 8306953226</p>
+      <p><span class="icon">✉</span> support@thenireetinest.com</p>
+      <p><span class="icon">◎</span> www.thenireetinest.com</p>
+      <p><span class="gst">GST</span> GSTIN: <b>08HJPPD3406L1ZW</b></p>
+    </div>
+    <div class="hero">
+      <img src="https://lh3.googleusercontent.com/d/1lRs7OgtvCrKc-3kLAZWrtjFu2Hz94G1_" alt="Background Image">
+    </div>
+  </section>
+
+  <section class="invoiceTitle">
+    <div>
+      <h2>TAX INVOICE</h2>
+    </div>
+    <div class="meta">
+      <div><b>Invoice No.</b><span class="edit" contenteditable="true">INV-2026-001</span></div>
+      <div><b>Invoice Date</b><span class="edit" contenteditable="true">14 Sep 2026</span></div>
+      <div><b>Place of Supply</b><span class="edit" contenteditable="true">Rajasthan (08)</span></div>
+    </div>
+  </section>
+
+  <section class="parties">
+  <div class="card"><h3>Bill To</h3>
+  <div class="field edit" contenteditable="true">Customer Name:</div>
+  <div class="field edit" contenteditable="true">Address:</div>
+  <div class="field edit" contenteditable="true">&nbsp;</div>
+  <div class="field edit" contenteditable="true">GSTIN (if any):</div>
+  <div class="field edit" contenteditable="true">State:</div>
+  <div class="field edit" contenteditable="true">Contact No.:</div>
+  </div>
+  <div class="card"><h3>Ship To <small>(if different)</small></h3>
+  <div class="field edit" contenteditable="true">Name:</div>
+  <div class="field edit" contenteditable="true">Address:</div>
+  <div class="field edit" contenteditable="true">&nbsp;</div>
+  <div class="field edit" contenteditable="true">State:</div>
+  <div class="field edit" contenteditable="true">Contact No.:</div>
+  </div>
+  </section>
+
+  <table class="items"><thead><tr>
+  <th style="width:5%">S.No.</th>
+  <th style="width:23%">Description of Goods</th>
+  <th style="width:9%">HSN Code</th>
+  <th style="width:6%">Qty</th>
+  <th style="width:6%">Unit</th>
+  <th style="width:10%">Rate (₹)</th>
+  <th style="width:9%">Discount (₹)</th>
+  <th style="width:11%">Taxable Value (₹)</th>
+  <th style="width:6%">GST %</th>
+  <th style="width:9%">Tax Amount (₹)</th>
+  <th style="width:11%">Total Amount (₹)</th>
+  </tr></thead><tbody id="rows"></tbody></table>
+
+  <section class="lower">
+  <div class="words"><h3>Total Amount in Words:</h3><div class="line" id="words">Zero Rupees Only</div><div class="line"></div></div>
+  <table class="totals">
+  <tr><td>Total Taxable Value</td><td id="taxable">₹ 0.00</td></tr>
+  <tr><td>CGST (<span contenteditable="true" class="edit" id="cgstRate">9</span>%)</td><td id="cgst">₹ 0.00</td></tr>
+  <tr><td>SGST (<span contenteditable="true" class="edit" id="sgstRate">9</span>%)</td><td id="sgst">₹ 0.00</td></tr>
+  <tr><td>IGST (<span contenteditable="true" class="edit" id="igstRate">0</span>%)</td><td id="igst">₹ 0.00</td></tr>
+  <tr><td>Round Off</td><td id="round">₹ 0.00</td></tr>
+  <tr class="grand"><td>Grand Total</td><td id="grand">₹ 0.00</td></tr>
+  </table>
+  </section>
+
+  <section class="bottom-container">
+    <div class="left-block">
+      <div class="bank">
+        <h3>🏦 Bank Details (for NEFT/RTGS)</h3>
+        <p>Bank Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: State Bank of India</p>
+        <p>Account Number &nbsp;: 61172037086</p>
+        <p>IFSC Code &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: SBIN0032029</p>
+        <p>Account Holder &nbsp;&nbsp;: Nireeti Enterprises</p>
+      </div>
+      <div class="terms">
+        <h3>▤ Terms & Conditions</h3>
+        <ol>
+          <li>Goods once sold will not be taken back or exchanged.</li>
+          <li>Payment to be made within 7 days from invoice date.</li>
+          <li>Interest @ 18% p.a. charged on delayed payments.</li>
+          <li>Subject to Jaipur, Rajasthan jurisdiction only.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="right-block">
+      <div class="thanksText">
+        Thank You ♡
+        <div class="thanksSmall">FOR BEING A PART OF OUR JOURNEY</div>
+      </div>
+      <div class="signBox">
+        <div class="signLine"></div>
+        <div class="signText">For Nireeti Enterprises<br><small>(Authorized Signatory)</small></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer class="footer">
+  <span>WWW.THENIREETINEST.COM</span>
+  <div class="footerLogoWrap">
+    <img class="footerLogo" src="https://lh3.googleusercontent.com/d/1dU0EQte2gqvney_3XB1FB-fUZDaAuemj" alt="Logo">
+  </div>
+  <span>SUPPORT@THENIREETINEST.COM</span>
+</footer>
+</main>
+
+<script>
+const tbody = document.getElementById('rows');
+for(let i = 1; i <= 5; i++) {
+  tbody.insertAdjacentHTML('beforeend', `<tr data-row>
+    <td>${i}</td>
+    <td><input class="desc" placeholder="Item description"></td>
+    <td><input class="hsn"></td>
+    <td><input class="qty" type="number" min="0" value="0"></td>
+    <td><input class="unit" value="pcs"></td>
+    <td><input class="rate" type="number" min="0" value="0"></td>
+    <td><input class="disc" type="number" min="0" value="0"></td>
+    <td class="taxableCell">0.00</td>
+    <td><input class="gstRate" type="number" min="0" value="18"></td>
+    <td class="gstCell">0.00</td>
+    <td class="totalCell">0.00</td>
+  </tr>`);
+}
+
+function money(n) {
+  return '₹ ' + n.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function calc() {
+  let taxable = 0, gst = 0;
+  document.querySelectorAll('[data-row]').forEach(r => {
+    let q = +r.querySelector('.qty').value || 0,
+        rate = +r.querySelector('.rate').value || 0,
+        d = +r.querySelector('.disc').value || 0,
+        gr = +r.querySelector('.gstRate').value || 0;
+    let base = Math.max(0, q * rate - d);
+    let tax = base * gr / 100;
+    r.querySelector('.taxableCell').textContent = base.toFixed(2);
+    r.querySelector('.gstCell').textContent = tax.toFixed(2);
+    r.querySelector('.totalCell').textContent = (base + tax).toFixed(2);
+    taxable += base;
+    gst += tax;
+  });
+
+  document.getElementById('taxable').textContent = money(taxable);
+  document.getElementById('cgst').textContent = money(gst / 2);
+  document.getElementById('sgst').textContent = money(gst / 2);
+  document.getElementById('igst').textContent = money(0);
+  
+  let total = taxable + gst;
+  let rounded = Math.round(total);
+  document.getElementById('round').textContent = money(rounded - total);
+  document.getElementById('grand').textContent = money(rounded);
+  document.getElementById('words').textContent = toWords(rounded) + ' Rupees Only';
+}
+
+document.addEventListener('input', calc);
+
+function resetItems() {
+  document.querySelectorAll('[data-row] input').forEach(x => {
+    x.value = x.classList.contains('unit') ? 'pcs' : (x.classList.contains('gstRate') ? '18' : '0');
+  });
+  calc();
+}
+
+function toWords(n) {
+  if (n === 0) return 'Zero';
+  const a = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+  const b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+  
+  function convert(num) {
+    if (num < 20) return a[num];
+    if (num < 100) return b[Math.floor(num / 10)] + (num % 10 ? ' ' + a[num % 10] : '');
+    if (num < 1000) return a[Math.floor(num / 100)] + ' Hundred' + (num % 100 ? ' ' + convert(num % 100) : '');
+    if (num < 100000) return convert(Math.floor(num / 1000)) + ' Thousand' + (num % 1000 ? ' ' + convert(num % 1000) : '');
+    if (num < 10000000) return convert(Math.floor(num / 100000)) + ' Lakh' + (num % 100000 ? ' ' + convert(num % 100000) : '');
+    return convert(Math.floor(num / 10000000)) + ' Crore' + (num % 10000000 ? ' ' + convert(num % 10000000) : '');
+  }
+  
+  return convert(n);
+}
+
+/* HIGH-RESOLUTION PDF GENERATION FUNCTION */
+function downloadHD_PDF() {
+  const element = document.getElementById('invoiceArea');
+  const opt = {
+    margin:       0,
+    filename:     'Ultra_HD_Invoice.pdf',
+    image:        { type: 'jpeg', quality: 1.0 },
+    html2canvas:  { scale: 4, useCORS: true, letterRendering: true, logging: false },
+    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  };
+  html2pdf().set(opt).from(element).save();
+}
+
+calc();
+</script>
+</body>
+</html>
