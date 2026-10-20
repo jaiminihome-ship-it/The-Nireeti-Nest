@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="night">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Nireeti Nest | Connect With Us</title>
+<meta name="description" content="Visit The Nireeti Nest: luxury handcrafted home decor from Jaipur. Find us on Instagram, Facebook, Pinterest & WhatsApp.">
+<meta name="theme-color" content="#0f0a07" id="themeMeta">
+<link rel="icon" href="https://i.ibb.co/BHYp8x24/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{--gold:#c8902e;--gold-l:#f0c566;--gold-d:#8a5a12}
+  html[data-theme="night"]{
+    --bg1:#0f0a07;--bg2:#2a190e;--fg:#f6ead2;--mut:#bfa985;
+    --wall:rgba(255,240,210,.045);--roofFill:#1b120c;--line:#b9873a;
+    --glowblend:screen;--card-shadow:0 20px 60px rgba(0,0,0,.6),0 0 50px rgba(240,170,60,.2);
+    --pat:.6;
+  }
+  html[data-theme="day"]{
+    --bg1:#fdfaf3;--bg2:#f0e2c4;--fg:#1a1210;--mut:#6b5645;
+    --wall:rgba(255,255,255,.55);--roofFill:#2a1d17;--line:#8a5a12;
+    --glowblend:multiply;--card-shadow:0 18px 45px rgba(138,90,18,.28);
+    --pat:.38;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{min-height:100%}
+  body{
+    font-family:'Jost',sans-serif;color:var(--fg);
+    background:radial-gradient(900px 520px at 50% 0,var(--bg2),transparent 70%),var(--bg1);
+    background-attachment:fixed;
+    transition:color .8s,background-color .8s;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  body:not(.on){overflow:hidden}
+
+  /* ---------- Jaali pattern with spotlight ---------- */
+  body::before,body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='none' stroke='%23c8902e' stroke-width='1'%3E%3Cpath d='M30 0L60 30L30 60L0 30Z'/%3E%3Ccircle cx='30' cy='30' r='9'/%3E%3Cpath d='M30 12V48M12 30H48'/%3E%3C/g%3E%3C/svg%3E");
+    background-size:60px 60px;
+  }
+  body::before{opacity:.06}
+  body::after{
+    opacity:var(--pat);
+    -webkit-mask-image:radial-gradient(circle 230px at var(--mx,50%) var(--my,30%),#000,transparent);
+            mask-image:radial-gradient(circle 230px at var(--mx,50%) var(--my,30%),#000,transparent);
+  }
+  #dust{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+  #glow{
+    position:fixed;top:0;left:0;width:440px;height:440px;border-radius:50%;
+    background:radial-gradient(circle,rgba(240,197,102,.34) 0%,rgba(240,197,102,.1) 38%,transparent 66%);
+    transform:translate(-50%,-50%);pointer-events:none;z-index:1;
+    mix-blend-mode:var(--glowblend);opacity:0;transition:opacity .4s;
+  }
+
+  .rope{display:block;width:2px;background:linear-gradient(#8a5a12,#f0c566)}
+  @keyframes swing{0%,100%{transform:rotate(4deg)}50%{transform:rotate(-4deg)}}
+
+  /* ---------- INTRO ---------- */
+  #intro{
+    position:fixed;inset:0;z-index:100;display:grid;place-items:center;
+    background:radial-gradient(circle at 50% 45%,#2a1a10 0%,#0b0705 70%);
+  }
+  #introLantern{
+    position:absolute;top:0;left:50%;margin-left:-45px;width:90px;
+    display:flex;flex-direction:column;align-items:center;
+    background:none;border:0;cursor:pointer;transform-origin:50% 0;
+    animation:swing 4.5s ease-in-out infinite;-webkit-tap-highlight-color:transparent;
+  }
+  #introLantern .rope{height:24vh}
+  #introLantern svg{width:90px;height:150px;filter:brightness(.35) saturate(.6);transition:filter .7s}
+  #introLantern:hover svg{filter:brightness(.6) saturate(.8)}
+  #intro.lit #introLantern svg{filter:brightness(1.15) drop-shadow(0 0 28px #ffb94a) drop-shadow(0 0 80px #ff9a1f)}
+  .intro-t{
+    position:absolute;left:0;right:0;bottom:16vh;text-align:center;padding:0 24px;
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;color:#d9c6a3;
+    animation:pulseT 2.4s ease-in-out infinite;transition:opacity .5s;
+  }
+  .intro-t small{display:block;margin-top:8px;font-family:'Jost',sans-serif;font-style:normal;font-size:11px;letter-spacing:.45em;color:#8a7352}
+  #intro.lit .intro-t{opacity:0;animation:none}
+  @keyframes pulseT{0%,100%{opacity:.55}50%{opacity:1}}
+
+  /* ---------- Corner lantern (theme switch) ---------- */
+  .pull{
+    position:fixed;top:0;right:14px;z-index:20;width:42px;background:none;border:0;cursor:pointer;
+    display:flex;flex-direction:column;align-items:center;transform-origin:50% 0;
+    animation:swing 5s ease-in-out infinite;opacity:0;transition:opacity 1s 2.2s;
+    -webkit-tap-highlight-color:transparent;
+  }
+  body.on .pull{opacity:1}
+  .pull .rope{height:34px}
+  .pull svg{width:42px;height:70px;filter:drop-shadow(0 0 10px rgba(255,185,74,.65))}
+  .pull.tug{animation:tug .9s cubic-bezier(.3,1.6,.5,1)}
+  @keyframes tug{0%{transform:rotate(0) scaleY(1)}25%{transform:rotate(-16deg) scaleY(1.12)}55%{transform:rotate(11deg)}80%{transform:rotate(-5deg)}100%{transform:rotate(0)}}
+  #hint{
+    position:fixed;top:20px;right:66px;z-index:20;text-align:right;font-size:11.5px;line-height:1.4;
+    color:var(--mut);letter-spacing:.05em;opacity:0;transition:opacity .8s;pointer-events:none;
+  }
+  body.on #hint{opacity:.9;transition-delay:3s}
+  #hint.gone{opacity:0!important;transition-delay:0s}
+
+  /* ---------- Butterfly ---------- */
+  #butterfly{
+    position:fixed;top:0;left:0;width:54px;height:54px;z-index:30;pointer-events:none;
+    filter:drop-shadow(0 6px 8px rgba(0,0,0,.3));will-change:transform;opacity:0;transition:opacity 1s 1.5s;
+  }
+  body.on #butterfly{opacity:1}
+  #butterfly .wing{transform-origin:30px 30px;animation:flap .22s ease-in-out infinite alternate}
+  #butterfly .wing.r{animation-direction:alternate-reverse}
+  #butterfly.rest .wing{animation-duration:.9s}
+  @keyframes flap{from{transform:scaleX(1)}to{transform:scaleX(.25)}}
+
+  /* ---------- Layout ---------- */
+  .wrap{position:relative;z-index:2;max-width:480px;margin:0 auto;padding:30px 22px 44px;display:flex;flex-direction:column;align-items:stretch}
+  .rv{opacity:0;transform:translateY(26px)}
+  body.on .rv{animation:rise .95s var(--d,0s) cubic-bezier(.2,.8,.2,1) forwards}
+  @keyframes rise{to{opacity:1;transform:none}}
+
+  /* signboard */
+  .signwrap{display:flex;flex-direction:column;align-items:center;margin-top:18px}
+  .rail{width:min(250px,64vw);height:6px;border-radius:6px;margin-bottom:22px;background:linear-gradient(90deg,var(--gold-d),var(--gold-l),var(--gold-d));box-shadow:0 4px 12px rgba(0,0,0,.35)}
+  .sign{position:relative;width:min(300px,76vw);transform-origin:50% -22px;animation:signSwing 6s ease-in-out infinite}
+  .sign::before,.sign::after{content:"";position:absolute;top:-22px;width:2px;height:24px;background:linear-gradient(var(--gold-l),var(--gold-d))}
+  .sign::before{left:22%}.sign::after{right:22%}
+  @keyframes signSwing{0%,100%{transform:rotate(1.2deg)}50%{transform:rotate(-1.2deg)}}
+  .sign-in{
+    position:relative;overflow:hidden;background:#fff;border:2px solid var(--gold);border-radius:20px;padding:6px;
+    box-shadow:var(--card-shadow);transition:transform .15s;will-change:transform;
+  }
+  .sign-in img{display:block;width:100%;aspect-ratio:1/.8;object-fit:cover;object-position:top;border-radius:14px}
+  .sign-in::after{
+    content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;
+    background:linear-gradient(100deg,transparent,rgba(255,226,150,.6),transparent);
+    transform:skewX(-20deg);animation:shine 6s 2.5s ease-in-out infinite;pointer-events:none;
+  }
+  @keyframes shine{0%{left:-60%}35%,100%{left:140%}}
+
+  .tag{margin-top:20px;text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;color:var(--gold-l);min-height:30px}
+  html[data-theme="day"] .tag{color:var(--gold-d)}
+  .tag span{display:inline-block;transition:opacity .5s,transform .5s}
+  .tag span.out{opacity:0;transform:translateY(8px)}
+  .hint{margin-top:6px;text-align:center;font-size:12.5px;letter-spacing:.14em;color:var(--mut);text-transform:uppercase}
+
+  /* ---------- House ---------- */
+  .roof{display:block;overflow:visible;width:calc(100% + 28px);margin:30px -14px -2px;height:auto;position:relative;z-index:2}
+  .roof .rf{fill:var(--roofFill)}
+  .smoke circle{fill:rgba(255,235,205,.55);transform-box:fill-box;transform-origin:center;opacity:0;animation:smoke 4.5s ease-out infinite}
+  .smoke circle:nth-child(2){animation-delay:1.5s}.smoke circle:nth-child(3){animation-delay:3s}
+  @keyframes smoke{0%{transform:translate(0,0) scale(.5);opacity:0}20%{opacity:.6}100%{transform:translate(-16px,-38px) scale(2.6);opacity:0}}
+  .attic{cursor:pointer;transform-box:fill-box;transform-origin:center;transition:transform .3s;animation:atticGlow 3s ease-in-out infinite;outline:none}
+  .attic:hover,.attic:focus{transform:scale(1.18)}
+  @keyframes atticGlow{0%,100%{filter:drop-shadow(0 0 3px #ffb94a)}50%{filter:drop-shadow(0 0 11px #ffb94a)}}
+
+  .walls{
+    position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:20px 14px 0;
+    border:3px solid var(--line);border-top:0;border-radius:0 0 14px 14px;
+    background:var(--wall);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  }
+
+  .win{
+    position:relative;display:block;aspect-ratio:1/1.3;border:3px solid var(--line);
+    border-radius:999px 999px 5px 5px;overflow:hidden;background:#150d08;text-decoration:none;
+    box-shadow:0 8px 18px rgba(0,0,0,.35);-webkit-tap-highlight-color:transparent;
+    transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s;
+  }
+  .win:hover,.win:focus-visible{transform:translateY(-5px) scale(1.04);box-shadow:0 14px 30px rgba(0,0,0,.45),0 0 34px rgba(255,185,74,.6);outline:none;z-index:3}
+  .win:active{transform:scale(.97)}
+  .pane{position:absolute;inset:0;background:radial-gradient(circle at 50% 65%,#ffe19a 0%,#f2ac3f 55%,#b8700f 100%);opacity:0}
+  .pane::before,.pane::after{content:"";position:absolute;background:rgba(80,40,6,.4)}
+  .pane::before{left:50%;top:0;bottom:0;width:2px;margin-left:-1px}
+  .pane::after{top:48%;left:0;right:0;height:2px}
+  .hl{position:absolute;inset:0;opacity:0;transition:opacity .3s;background:radial-gradient(circle 70px at var(--wx,50%) var(--wy,60%),rgba(255,255,255,.75),transparent 70%)}
+  .win:hover .hl{opacity:.9}
+  .cur{position:absolute;top:0;bottom:0;width:17%;z-index:2;background:repeating-linear-gradient(90deg,#8c2336 0 4px,#5c1220 4px 8px);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+  .cl{left:0;border-right:2px solid var(--gold)}.cr{right:0;border-left:2px solid var(--gold)}
+  .win:hover .cl,.win:focus-visible .cl{transform:translateX(-100%)}
+  .win:hover .cr,.win:focus-visible .cr{transform:translateX(100%)}
+  .in{
+    position:relative;z-index:3;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:5px;padding-top:18%;color:var(--gold-l);text-align:center;
+  }
+  .in svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .4s}
+  .win:hover .in svg{transform:scale(1.18) rotate(-6deg)}
+  .in b{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:700;letter-spacing:.02em}
+  body.on .pane{animation:lightOn 1s calc(1.5s + var(--i,0)*.3s) forwards}
+  body.on .in{animation:inkOn .6s calc(1.7s + var(--i,0)*.3s) forwards}
+  @keyframes lightOn{0%{opacity:0}15%{opacity:.9}25%{opacity:.15}45%{opacity:.95}58%{opacity:.4}100%{opacity:1}}
+  @keyframes inkOn{to{color:#2b1707}}
+
+  /* porch + door */
+  .porch{grid-column:1/-1;display:flex;justify-content:center;align-items:flex-end;gap:clamp(14px,6vw,34px);padding-top:6px}
+  .door{display:block;width:112px;height:154px;-webkit-tap-highlight-color:transparent;outline:none}
+  .frame{
+    position:relative;display:block;width:100%;height:100%;perspective:600px;overflow:hidden;
+    border:4px solid var(--line);border-bottom:0;border-radius:56px 56px 0 0;background:#150d08;
+  }
+  .inside{
+    position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+    background:radial-gradient(circle at 50% 70%,#ffe6a8,#f2ac3f 60%,#b8700f);color:#2b1707;padding-top:14px;
+  }
+  .inside svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .inside b{font-family:'Cormorant Garamond',serif;font-size:18px;letter-spacing:.14em;text-transform:uppercase}
+  .leaf{
+    position:absolute;top:0;bottom:0;width:50%;background:linear-gradient(160deg,#4a2b17,#26150a);
+    box-shadow:inset 0 0 0 2px rgba(240,197,102,.35);transition:transform .8s cubic-bezier(.2,.8,.2,1);
+  }
+  .leaf.l{left:0;transform-origin:left center}.leaf.r{right:0;transform-origin:right center}
+  .leaf::after{content:"";position:absolute;top:56%;width:7px;height:7px;border-radius:50%;background:var(--gold-l);box-shadow:0 0 6px var(--gold-l)}
+  .leaf.l::after{right:7px}.leaf.r::after{left:7px}
+  .door:hover .leaf.l,.door:focus-visible .leaf.l{transform:rotateY(78deg)}
+  .door:hover .leaf.r,.door:focus-visible .leaf.r{transform:rotateY(-78deg)}
+  .door:not(:hover):not(:focus-visible) .leaf.l{animation:peekL 7s 4s infinite}
+  .door:not(:hover):not(:focus-visible) .leaf.r{animation:peekR 7s 4s infinite}
+  @keyframes peekL{0%,86%,100%{transform:none}92%{transform:rotateY(30deg)}}
+  @keyframes peekR{0%,86%,100%{transform:none}92%{transform:rotateY(-30deg)}}
+
+  .vase{width:44px;height:96px;flex:none}
+  .sway{transform-origin:30px 62px;animation:sway 4s ease-in-out infinite}
+  @keyframes sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+  .hang{align-self:flex-start;display:flex;flex-direction:column;align-items:center;transform-origin:50% 0;animation:swing 4.2s ease-in-out infinite}
+  .hang .rope{height:22px}
+  .hang svg{width:30px;height:50px;filter:drop-shadow(0 0 8px rgba(255,185,74,.65))}
+
+  /* CTA */
+  .cta{
+    position:relative;overflow:hidden;margin:26px auto 0;display:flex;align-items:center;gap:10px;width:max-content;
+    padding:14px 32px;border-radius:999px;text-decoration:none;color:#1a1210;
+    font-family:'Cormorant Garamond',serif;font-weight:700;font-size:20px;letter-spacing:.08em;
+    background:linear-gradient(135deg,var(--gold-l),var(--gold) 55%,var(--gold-d));
+    animation:ring 2.6s infinite;transition:transform .3s;
+  }
+  .cta:hover{transform:scale(1.06) translateY(-2px)}
+  .cta::after{content:"";position:absolute;top:0;left:-70%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.6),transparent);transform:skewX(-20deg);animation:shine 4s 1s infinite}
+  @keyframes ring{0%{box-shadow:0 0 0 0 rgba(240,197,102,.55)}70%,100%{box-shadow:0 0 0 18px rgba(240,197,102,0)}}
+
+  footer{margin-top:34px;text-align:center;font-size:12.5px;line-height:1.8;color:var(--mut)}
+  footer em{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--gold-l)}
+  html[data-theme="day"] footer em{color:var(--gold-d)}
+
+  #toast{
+    position:fixed;left:50%;bottom:30px;z-index:40;transform:translate(-50%,20px);opacity:0;
+    padding:12px 22px;border-radius:999px;background:#1a1210;color:var(--gold-l);border:1px solid var(--gold);
+    font-size:14px;transition:.4s;pointer-events:none;
+  }
+  #toast.show{opacity:1;transform:translate(-50%,0)}
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:.01s!important;animation-delay:0s!important;transition:none!important}
+    #butterfly,#dust,#glow{display:none}
+  }
+  @media (hover:none){#glow{display:none}}
+</style>
+</head>
+
+<body>
+
+<!-- shared SVG defs -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gGold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f6d27a"/><stop offset=".5" stop-color="#c8902e"/><stop offset="1" stop-color="#8a5a12"/>
+    </linearGradient>
+    <linearGradient id="gGlass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffe3a0"/><stop offset="1" stop-color="#e49a2b"/>
+    </linearGradient>
+    <linearGradient id="wg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f6c85f"/><stop offset="1" stop-color="#b9731a"/>
+    </linearGradient>
+    <symbol id="lantern" viewBox="0 0 60 100">
+      <circle cx="30" cy="7" r="5" fill="none" stroke="url(#gGold)" stroke-width="2.5"/>
+      <path d="M30 12V19" stroke="url(#gGold)" stroke-width="2.5"/>
+      <path d="M13 29Q30 10 47 29Z" fill="url(#gGold)"/>
+      <rect x="16" y="29" width="28" height="44" rx="3" fill="url(#gGlass)" stroke="url(#gGold)" stroke-width="2.5"/>
+      <path d="M30 29V73M16 51H44" stroke="#7a4a0a" stroke-width="1" opacity=".45"/>
+      <ellipse cx="30" cy="55" rx="4" ry="9" fill="#fff6d6"/>
+      <rect x="13" y="73" width="34" height="7" rx="2" fill="url(#gGold)"/>
+      <path d="M18 80L22 91H38L42 80Z" fill="url(#gGold)"/>
+    </symbol>
+  </defs>
+</svg>
+
+<canvas id="dust"></canvas>
+<div id="glow"></div>
+
+<!-- Butterfly -->
+<svg id="butterfly" viewBox="0 0 60 60" aria-hidden="true">
+  <g class="wing l"><path d="M30 28C18 6 2 8 6 24C8 34 22 36 30 31Z" fill="url(#wg)" stroke="#6b3f0c" stroke-width=".8"/>
+    <path d="M30 32C20 34 10 42 16 50C22 54 28 42 30 34Z" fill="url(#wg)" stroke="#6b3f0c" stroke-width=".8"/></g>
+  <g class="wing r"><path d="M30 28C42 6 58 8 54 24C52 34 38 36 30 31Z" fill="url(#wg)" stroke="#6b3f0c" stroke-width=".8"/>
+    <path d="M30 32C40 34 50 42 44 50C38 54 32 42 30 34Z" fill="url(#wg)" stroke="#6b3f0c" stroke-width=".8"/></g>
+  <ellipse cx="30" cy="32" rx="1.8" ry="9" fill="#2a1d17"/>
+  <path d="M29 23Q25 14 21 13M31 23Q35 14 39 13" stroke="#2a1d17" stroke-width=".8" fill="none"/>
+</svg>
+
+<!-- Theme lantern -->
+<button class="pull" id="themeBtn" aria-label="Switch day and night">
+  <span class="rope"></span>
+  <svg viewBox="0 0 60 100"><use href="#lantern" width="60" height="100"/></svg>
+</button>
+<div id="hint">Pull the lantern<br>for day / night ✦</div>
+
+<!-- INTRO -->
+<div id="intro">
+  <button id="introLantern" aria-label="Light the lantern">
+    <span class="rope"></span>
+    <svg viewBox="0 0 60 100"><use href="#lantern" width="60" height="100"/></svg>
+  </button>
+  <p class="intro-t">Tap the lantern to light up the Nest<small>THE NIREETI NEST</small></p>
+</div>
+
+<main class="wrap">
+
+  <div class="signwrap rv" style="--d:.1s">
+    <div class="rail"></div>
+    <div class="sign">
+      <div class="sign-in" id="signIn">
+        <img src="https://i.ibb.co/BHYp8x24/logo.jpg" alt="The Nireeti Nest logo">
+      </div>
+    </div>
+  </div>
+  <h1 style="position:absolute;width:1px;height:1px;overflow:hidden">The Nireeti Nest</h1>
+
+  <p class="tag rv" style="--d:.35s"><span id="tagTxt">Curating Your Living Story</span></p>
+  <p class="hint rv" style="--d:.5s">Tap a window to visit us</p>
+
+  <section class="house rv" style="--d:.7s">
+    <svg class="roof" viewBox="0 0 400 100" aria-label="Roof of the Nest">
+      <g class="smoke"><circle cx="308" cy="24" r="5"/><circle cx="308" cy="24" r="5"/><circle cx="308" cy="24" r="5"/></g>
+      <rect class="rf" x="294" y="30" width="26" height="40" stroke="url(#gGold)" stroke-width="3"/>
+      <rect x="290" y="23" width="34" height="9" rx="2" fill="url(#gGold)"/>
+      <polygon class="rf" points="3,97 200,9 397,97" stroke="url(#gGold)" stroke-width="4" stroke-linejoin="round"/>
+      <g class="attic" id="attic" role="button" tabindex="0" aria-label="Share this page">
+        <title>Share this page</title>
+        <circle cx="200" cy="64" r="18" fill="url(#gGold)"/>
+        <circle cx="200" cy="64" r="14" fill="#f2ac3f"/>
+        <path d="M200 50V78M186 64H214" stroke="#7a4a0a" stroke-width="1.6" opacity=".55"/>
+        <path d="M195 66l5-8 5 8M200 58v10" stroke="#2b1707" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0"/>
+      </g>
+    </svg>
+
+    <nav class="walls" id="walls" aria-label="Social links">
+      <!-- windows are generated by JS below -->
+      <div class="porch" id="porch">
+        <svg class="vase" viewBox="0 0 60 120" aria-hidden="true">
+          <g class="sway" fill="none" stroke="#c8902e" stroke-width="2" stroke-linecap="round">
+            <path d="M30 62Q29 40 30 18"/><path d="M30 50Q22 42 14 40"/><path d="M30 42Q38 34 46 32"/>
+            <ellipse cx="30" cy="14" rx="5" ry="10" fill="#f0c566" stroke="none"/>
+            <ellipse cx="12" cy="38" rx="4.5" ry="9" fill="#e0a840" stroke="none" transform="rotate(-62 12 38)"/>
+            <ellipse cx="48" cy="30" rx="4.5" ry="9" fill="#e0a840" stroke="none" transform="rotate(62 48 30)"/>
+          </g>
+          <path d="M22 72Q16 92 22 116H38Q44 92 38 72Q36 62 30 62Q24 62 22 72Z" fill="url(#gGold)"/>
+        </svg>
+
+        <a class="door" id="door" href="https://www.thenireetinest.com" target="_blank" rel="noopener" aria-label="Enter the shop">
+          <span class="frame">
+            <span class="inside">
+              <svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+              <b>Shop</b>
+            </span>
+            <span class="leaf l"></span><span class="leaf r"></span>
+          </span>
+        </a>
+
+        <div class="hang" aria-hidden="true">
+          <span class="rope"></span>
+          <svg viewBox="0 0 60 100"><use href="#lantern" width="60" height="100"/></svg>
+        </div>
+      </div>
+    </nav>
+  </section>
+
+  <a class="cta rv" id="cta" style="--d:1s" href="https://www.thenireetinest.com" target="_blank" rel="noopener">
+    ✦ Enter the Shop
+  </a>
+
+  <footer class="rv" style="--d:1.2s">
+    <em>Jaipur · Handcrafted · Luxury</em><br>
+    C-103, Ekta Nagar, Dhawas, Jaipur – 302021<br>
+    ©️ <span id="yr"></span> The Nireeti Nest
+  </footer>
+</main>
+
+<div id="toast"></div>
+
+<script>
+const root = document.documentElement;
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+/* =====================================================
+   LINKS: yahan se links badal sakte ho
+   ===================================================== */
+const LINKS = [
+  {n:'WhatsApp', h:'https://wa.me/917014278553?text=Hi%20Nireeti%20Nest!%20I%20would%20like%20to%20know%20more.',
+   i:'<path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1.2-1.4-1.8-.9-.8.6c-.9-.4-1.6-1.1-2-2l.6-.8-.9-1.8z"/>'},
+  {n:'Instagram', h:'https://www.instagram.com/thenireetinest',
+   i:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/>'},
+  {n:'Facebook', h:'https://www.facebook.com/share/1NR7en1Gav/',
+   i:'<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>'},
+  {n:'Pinterest', h:'https://www.pinterest.com/thenireetinest/',
+   i:'<circle cx="12" cy="12" r="9.5"/><path d="M10.5 20.5l2-8.5M9.5 12.5c-1-3 1-5.5 3.5-5.5 2.2 0 3.5 1.6 3.2 3.6-.3 2-1.5 3.4-3.2 3.4-1 0-1.6-.6-1.8-1.2"/>'},
+  {n:'Email', h:'mailto:Support@thenireetinest.com',
+   i:'<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7l8.5 6 8.5-6"/>'},
+  {n:'Visit Us', h:'https://www.google.com/maps/search/?api=1&query=C-103+Ekta+Nagar+Dhawas+Jaipur+302021',
+   i:'<path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>'}
+];
+
+const walls = document.getElementById('walls'), porch = document.getElementById('porch');
+LINKS.forEach((l,i)=>{
+  const a = document.createElement('a');
+  a.className = 'win'; a.href = l.h; a.style.setProperty('--i', i);
+  a.setAttribute('aria-label', l.n);
+  if(!l.h.startsWith('mailto')){ a.target = '_blank'; a.rel = 'noopener'; }
+  a.innerHTML = `<i class="pane"></i><i class="hl"></i><i class="cur cl"></i><i class="cur cr"></i>
+    <span class="in"><svg viewBox="0 0 24 24">${l.i}</svg><b>${l.n}</b></span>`;
+  a.addEventListener('pointermove', e=>{
+    const r = a.getBoundingClientRect();
+    a.style.setProperty('--wx', (e.clientX-r.left)+'px');
+    a.style.setProperty('--wy', (e.clientY-r.top)+'px');
+  });
+  walls.insertBefore(a, porch);
+});
+
+/* ---------- Toast ---------- */
+const toastEl = document.getElementById('toast'); let toastT;
+function toast(msg){ toastEl.textContent = msg; toastEl.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(()=>toastEl.classList.remove('show'), 2200); }
+
+/* ---------- Gold dust + click sparkles ---------- */
+const dpr = window.devicePixelRatio || 1;
+let sparkle;
+(function(){
+  const c = document.getElementById('dust'), x = c.getContext('2d');
+  let W, H, dots = [], bursts = [];
+  const mouse = {x:-999,y:-999};
+  function resize(){
+    W = c.width = innerWidth*dpr; H = c.height = innerHeight*dpr;
+    const n = innerWidth < 600 ? 35 : 70;
+    dots = Array.from({length:n}, () => ({
+      x:Math.random()*W, y:Math.random()*H, r:(Math.random()*2+.6)*dpr,
+      vy:-(Math.random()*.35+.1)*dpr, vx:(Math.random()-.5)*.2*dpr,
+      t:Math.random()*6.28, s:Math.random()*.03+.01
+    }));
+  }
+  addEventListener('resize', resize); resize();
+  addEventListener('pointermove', e => { mouse.x = e.clientX*dpr; mouse.y = e.clientY*dpr; });
+  sparkle = (px,py) => {
+    for(let i=0;i<16;i++){
+      const a = Math.random()*6.28, s = Math.random()*3+1.5;
+      bursts.push({x:px*dpr,y:py*dpr,vx:Math.cos(a)*s*dpr,vy:(Math.sin(a)*s-1)*dpr,l:1,r:(Math.random()*2+1.2)*dpr});
+    }
+  };
+  addEventListener('pointerdown', e => sparkle(e.clientX, e.clientY));
+
+  (function loop(){
+    x.clearRect(0,0,W,H);
+    for(const d of dots){
+      d.t += d.s; d.x += d.vx + Math.sin(d.t)*.2; d.y += d.vy;
+      const dx = d.x-mouse.x, dy = d.y-mouse.y, dist = Math.hypot(dx,dy) || 1;
+      if(dist < 140*dpr){ d.x += dx/dist*1.2; d.y += dy/dist*1.2; }
+      if(d.y < -10){ d.y = H+10; d.x = Math.random()*W; }
+      const a = .35 + Math.sin(d.t*2)*.3;
+      const g = x.createRadialGradient(d.x,d.y,0,d.x,d.y,d.r*4);
+      g.addColorStop(0,`rgba(240,197,102,${a})`); g.addColorStop(1,'rgba(240,197,102,0)');
+      x.fillStyle = g; x.beginPath(); x.arc(d.x,d.y,d.r*4,0,7); x.fill();
+    }
+    for(let i=bursts.length-1;i>=0;i--){
+      const b = bursts[i]; b.x += b.vx; b.y += b.vy; b.vy += .07*dpr; b.l -= .02;
+      if(b.l <= 0){ bursts.splice(i,1); continue; }
+      x.fillStyle = `rgba(255,214,120,${b.l})`;
+      x.beginPath(); x.arc(b.x,b.y,b.r*b.l,0,7); x.fill();
+    }
+    requestAnimationFrame(loop);
+  })();
+})();
+
+/* ---------- Lantern spotlight / glow cursor ---------- */
+(function(){
+  const g = document.getElementById('glow');
+  let tx = innerWidth/2, ty = innerHeight*.3, cx = tx, cy = ty;
+  addEventListener('pointermove', e => { tx = e.clientX; ty = e.clientY; g.style.opacity = 1; });
+  document.addEventListener('mouseleave', () => g.style.opacity = 0);
+  (function loop(){
+    cx += (tx-cx)*.12; cy += (ty-cy)*.12;
+    g.style.left = cx+'px'; g.style.top = cy+'px';
+    root.style.setProperty('--mx', cx+'px'); root.style.setProperty('--my', cy+'px');
+    requestAnimationFrame(loop);
+  })();
+})();
+
+/* ---------- Butterfly (lands on windows!) ---------- */
+let landing = null;
+(function(){
+  const b = document.getElementById('butterfly');
+  let t = 0, px = innerWidth*.7, py = 120, tx = px, ty = py, follow = false, timer;
+  addEventListener('pointermove', e => {
+    follow = true; tx = e.clientX + 40; ty = e.clientY - 40;
+    clearTimeout(timer); timer = setTimeout(() => follow = false, 2500);
+  });
+  const canHover = matchMedia('(hover:hover)').matches;
+  document.querySelectorAll('.win,.door,.cta,.attic').forEach(el=>{
+    el.addEventListener('pointerenter', () => {
+      if(!canHover) return;
+      const r = el.getBoundingClientRect();
+      landing = {x:r.left + r.width/2, y:r.top - 4};
+    });
+    el.addEventListener('pointerleave', () => landing = null);
+  });
+  (function loop(){
+    t += .012;
+    if(landing){ tx = landing.x; ty = landing.y - 14; }
+    else if(!follow){
+      tx = innerWidth/2 + Math.sin(t*1.1)*innerWidth*.38;
+      ty = 110 + Math.sin(t*1.7)*70 + Math.cos(t*.6)*60;
+    }
+    const dx = (tx-px)*.045, dy = (ty-py)*.045;
+    px += dx; py += dy;
+    const resting = landing && Math.hypot(tx-px, ty-py) < 10;
+    b.classList.toggle('rest', !!resting);
+    const tilt = Math.max(-25, Math.min(25, dx*6));
+    const bob = resting ? 0 : Math.sin(t*9)*3;
+    b.style.transform = `translate(${px-27}px,${py-27+bob}px) rotate(${tilt}deg)`;
+    requestAnimationFrame(loop);
+  })();
+})();
+
+/* ---------- Signboard 3D tilt ---------- */
+(function(){
+  const s = document.getElementById('signIn');
+  s.addEventListener('pointermove', e => {
+    const r = s.getBoundingClientRect();
+    const px = (e.clientX-r.left)/r.width - .5, py = (e.clientY-r.top)/r.height - .5;
+    s.style.transform = `perspective(700px) rotateY(${px*16}deg) rotateX(${-py*16}deg) scale(1.02)`;
+  });
+  s.addEventListener('pointerleave', () => { s.style.transition = 'transform .6s'; s.style.transform = ''; setTimeout(()=>s.style.transition='transform .15s',600); });
+})();
+
+/* ---------- Rotating tagline ---------- */
+(function(){
+  const lines = ['Curating Your Living Story','Handcrafted in Jaipur','Luxury for every corner','Where houses become homes'];
+  const el = document.getElementById('tagTxt'); let k = 0;
+  setInterval(()=>{
+    el.classList.add('out');
+    setTimeout(()=>{ k = (k+1)%lines.length; el.textContent = lines[k]; el.classList.remove('out'); }, 500);
+  }, 3400);
+})();
+
+/* ---------- Share (attic window) ---------- */
+async function share(){
+  const data = {title:'The Nireeti Nest', text:'Luxury handcrafted home decor from Jaipur', url:location.href};
+  try{ if(navigator.share){ await navigator.share(data); return; } }catch(e){ return; }
+  try{ await navigator.clipboard.writeText(location.href); toast('Link copied ✨'); }
+  catch(e){ toast('Copy the link from the address bar'); }
+}
+const attic = document.getElementById('attic');
+attic.addEventListener('click', share);
+attic.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' ') share(); });
+
+/* ---------- Haptics on mobile ---------- */
+document.querySelectorAll('.win,.door,.cta').forEach(el=>{
+  el.addEventListener('pointerdown', () => navigator.vibrate && navigator.vibrate(12));
+});
+
+/* ---------- Day / Night ---------- */
+(function(){
+  const btn = document.getElementById('themeBtn'), hint = document.getElementById('hint'), meta = document.getElementById('themeMeta');
+  function apply(d){ root.dataset.theme = d; meta.content = d === 'night' ? '#0f0a07' : '#fdfaf3'; }
+  try{ const s = localStorage.getItem('nest-theme'); if(s) apply(s); }catch(e){}
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const d = root.dataset.theme === 'night' ? 'day' : 'night';
+    apply(d); hint.classList.add('gone');
+    btn.classList.remove('tug'); void btn.offsetWidth; btn.classList.add('tug');
+    try{ localStorage.setItem('nest-theme', d); }catch(e){}
+  });
+  btn.addEventListener('animationend', e => { if(e.animationName === 'tug') btn.classList.remove('tug'); });
+  setTimeout(()=>hint.classList.add('gone'), 12000);
+})();
+
+/* ---------- Intro: light the lantern ---------- */
+(function(){
+  const intro = document.getElementById('intro'), lamp = document.getElementById('introLantern');
+  let entered = false;
+  function enter(){
+    if(entered) return; entered = true;
+    const r = lamp.querySelector('svg').getBoundingClientRect();
+    const cx = r.left + r.width/2, cy = r.top + r.height*.55;
+    intro.classList.add('lit');
+    sparkle && sparkle(cx, cy);
+    setTimeout(()=>{
+      document.body.classList.add('on');
+      const max = Math.hypot(Math.max(cx, innerWidth-cx), Math.max(cy, innerHeight-cy)) + 60;
+      const t0 = performance.now(), dur = 1500;
+      (function step(t){
+        const p = Math.min(1, (t-t0)/dur), e = 1 - Math.pow(1-p, 3), rad = e*max;
+        const m = `radial-gradient(circle at ${cx}px ${cy}px, transparent ${rad}px, #000 ${rad+40}px)`;
+        intro.style.webkitMaskImage = m; intro.style.maskImage = m;
+        if(p < 1) requestAnimationFrame(step); else intro.remove();
+      })(t0);
+    }, 700);
+  }
+  intro.addEventListener('click', enter);
+  setTimeout(enter, 6000);
+})();
+</script>
+</body>
+</html>
